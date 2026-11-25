@@ -1,0 +1,207 @@
+@font-face {
+  font-family: "Google Sans";
+  src: url("fonts/google-sans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  src: url("fonts/noto-sans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  font-family: "Noto Sans", Arial, sans-serif;
+  color: #363636;
+  background: #fff;
+}
+
+* { box-sizing: border-box; }
+body, h1, h2, h3, p, figure { margin: 0; }
+main { padding: clamp(32px, 4vw, 52px) 0 72px; }
+
+.paper-header {
+  width: min(calc(100% - 40px), 1152px);
+  margin-inline: auto;
+  text-align: center;
+}
+
+h1, .authors { font-family: "Google Sans", Arial, sans-serif; }
+h1 {
+  font-size: clamp(28px, 3.3vw, 40px);
+  font-weight: 600;
+  line-height: 1.14;
+  text-wrap: balance;
+}
+h1 strong { color: #000; font-weight: 700; }
+
+.authors {
+  margin-top: 21px;
+  font-size: clamp(17px, 1.7vw, 20px);
+  line-height: 1.65;
+  color: #1874bb;
+  text-wrap: balance;
+}
+.authors span { display: inline-block; }
+sup { font-size: 0.68em; line-height: 0; }
+.authors sup { color: #4a4a4a; }
+.affiliation { margin-top: 5px; font-size: clamp(16px, 1.5vw, 20px); }
+.paper-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.paper-links > * { padding: 6px 16px; border-radius: 999px; font-size: 15px; line-height: 1.45; }
+.paper-links a { background: #303030; color: white; text-decoration: none; }
+.paper-links a:hover, .paper-links a:focus-visible { background: #101010; text-decoration: underline; }
+.paper-links span { background: #f0f1f2; color: #515151; }
+
+section {
+  width: min(60%, 1080px);
+  margin: clamp(36px, 4vw, 52px) auto 0;
+}
+h2 {
+  margin-bottom: 22px;
+  text-align: center;
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: #111;
+}
+video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #151515;
+}
+
+.comparisons { width: min(calc(100% - 48px), 1200px); }
+.comparison-note { margin: -8px 0 24px; text-align: center; color: #545454; line-height: 1.5; }
+.comparison-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 22px; }
+.comparison { container-type: inline-size; }
+.comparison h3 { margin-bottom: 8px; font-size: 19px; font-weight: 600; }
+.playback { display: flex; align-items: center; gap: 12px; }
+.timecode { font-size: 14px; color: #545454; }
+video[hidden] { display: none; }
+.comparison-view {
+  --split: 50%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #191919;
+}
+.comparison-view canvas { display: block; width: 100%; height: auto; }
+.side, .split-control { position: absolute; inset: 0; }
+.side { pointer-events: none; }
+.side .badge {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  bottom: 9px;
+  border-radius: 4px;
+  padding: 5px 8px;
+  background: rgb(16 18 20 / 83%);
+  color: white;
+  font-size: clamp(11px, 2.2cqw, 13px);
+  white-space: nowrap;
+}
+.render-rate { font-variant-numeric: tabular-nums; font-weight: 600; }
+.baseline .badge { left: 8px; }
+.ours .badge { right: 8px; }
+@container (max-width: 320px) {
+  .side .badge { font-size: 10.5px; padding-inline: 5px; }
+  .baseline .badge { left: 4px; }
+  .ours .badge { right: 4px; }
+}
+.baseline { clip-path: inset(0 calc(100% - var(--split)) 0 0); }
+.ours { clip-path: inset(0 0 0 var(--split)); }
+.divider {
+  position: absolute;
+  inset: 0 auto 0 var(--split);
+  width: 2px;
+  background: white;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.divider span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-content: center;
+  width: 38px;
+  height: 38px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 48%);
+  color: white;
+  white-space: pre;
+  font: 12px Arial, sans-serif;
+}
+.split-control {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+.comparison-view:focus-within { outline: 3px solid #1874bb; outline-offset: 3px; }
+.playback { margin-top: 10px; }
+.play-toggle {
+  min-width: 65px;
+  min-height: 36px;
+  background: white;
+  color: #262626;
+  border: 1px solid #c7c7c7;
+  border-radius: 5px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.play-toggle:hover { background: #f6f6f6; }
+.timeline { flex: 1; min-width: 0; height: 36px; margin: 0; accent-color: #1874bb; cursor: pointer; }
+.timecode { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.media-error:not(:empty) { margin-top: 8px; }
+
+#performance { width: min(calc(100% - 48px), 1200px); }
+.device-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.device-panels figure { min-width: 0; text-align: center; }
+.device-panels a { display: block; cursor: zoom-in; }
+.device-panels img { display: block; width: 100%; height: auto; }
+.device-panels figcaption { margin-top: 8px; font-size: 18px; }
+.figure-note { margin-top: 16px; text-align: center; font-size: 14px; line-height: 1.6; color: #545454; }
+#bibtex a { color: #176fa6; text-underline-offset: .15em; }
+#bibtex { width: min(calc(100% - 48px), 900px); }
+#bibtex pre {
+  margin: 0;
+  padding: clamp(14px, 3vw, 24px);
+  background: #f5f6f7;
+  border-radius: 6px;
+  font: 14px/1.6 Consolas, "Courier New", monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+#bibtex code { font: inherit; }
+
+@media (max-width: 900px) {
+  section { width: min(calc(100% - 32px), 720px); }
+  .comparisons { width: calc(100% - 32px); }
+  #performance, #bibtex { width: calc(100% - 32px); }
+  .device-panels { grid-template-columns: minmax(0, 1fr); max-width: 700px; margin-inline: auto; }
+}
+
+@media (max-width: 719px) {
+  .comparison-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .paper-header { width: calc(100% - 32px); }
+  .authors { margin-top: 16px; }
+  h2 { margin-bottom: 16px; }
+  .playback { gap: 8px; }
+  .timecode { font-size: 12px; }
+}

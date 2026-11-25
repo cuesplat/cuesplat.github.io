@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CUESPLAT: Learning to Schedule Sparse Deformation for Dynamic Gaussian Splatting on Edge Devices</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="comparison.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="paper-header">
+      <h1><strong>CUESPLAT:</strong> Learning to Schedule Sparse Deformation for Dynamic Gaussian Splatting on Edge Devices</h1>
+      <p class="authors">
+        <span>Qingyuan Tang<sup>1</sup>,</span>
+        <span>He Zhu<sup>1</sup>,</span>
+        <span>Shixuan Sun<sup>1</sup>,</span>
+        <span>Anbang Wu<sup>1</sup>,</span>
+        <span>Jingwen Leng<sup>1</sup>,</span>
+        <span>Minyi Guo<sup>1</sup>,</span>
+        <span>Yu Feng<sup>1</sup></span>
+      </p>
+      <p class="affiliation"><sup>1</sup> Shanghai Jiaotong University</p>
+      <div class="paper-links">
+        <a href="https://arxiv.org/abs/2611.22095">arXiv</a>
+        <span>GitHub · Coming soon</span>
+      </div>
+    </header>
+
+    <section aria-labelledby="video-heading">
+      <h2 id="video-heading"><span aria-hidden="true">📹</span> Video Overview</h2>
+      <video controls playsinline preload="metadata" poster="media/poster.jpg"
+             width="1920" height="1080" aria-labelledby="video-heading">
+        <source src="media/supplementary.mp4" type="video/mp4">
+        <a href="media/supplementary.mp4">Open the supplementary video</a>
+      </video>
+    </section>
+
+    <section id="comparisons" class="comparisons" aria-labelledby="comparisons-heading">
+      <h2 id="comparisons-heading"><span aria-hidden="true">🔍</span> Qualitative Comparisons</h2>
+      <p class="comparison-note">Labels show average rendering FPS over three runs on NVIDIA Jetson AGX Orin. The N3DV and Technicolor clips play at 30 fps.</p>
+      <div class="comparison-grid">
+        <article class="comparison" data-method="E-D3DGS" data-baseline-fps="20.93" data-ours-fps="62.69"
+                 data-fps="30" data-frames="300" aria-labelledby="sear-steak-heading">
+          <h3 id="sear-steak-heading">Sear Steak</h3>
+          <video class="pair-source" src="media/sear-steak-pair.mp4" preload="auto" muted playsinline hidden></video>
+        </article>
+        <article class="comparison" data-method="4DGaussians" data-baseline-fps="30.68" data-ours-fps="54.73"
+                 data-fps="30" data-frames="300" aria-labelledby="cook-spinach-heading">
+          <h3 id="cook-spinach-heading">Cook Spinach</h3>
+          <video class="pair-source" src="media/cook-spinach-pair.mp4" preload="auto" muted playsinline hidden></video>
+        </article>
+        <article class="comparison" data-method="GaGS" data-baseline-fps="9.67" data-ours-fps="29.10"
+                 data-fps="30" data-frames="300" aria-labelledby="coffee-martini-heading">
+          <h3 id="coffee-martini-heading">Coffee Martini</h3>
+          <video class="pair-source" src="media/coffee-martini-pair.mp4" preload="auto" muted playsinline hidden></video>
+        </article>
+        <article class="comparison" data-method="SpeeDe3DGS" data-baseline-fps="17.33" data-ours-fps="30.12"
+                 data-fps="30" data-frames="300" aria-labelledby="flame-steak-heading">
+          <h3 id="flame-steak-heading">Flame Steak</h3>
+          <video class="pair-source" src="media/flame-steak-pair.mp4" preload="auto" muted playsinline hidden></video>
+        </article>
+        <article class="comparison" data-method="E-D3DGS" data-baseline-fps="18.27" data-ours-fps="103.18"
+                 data-fps="30" data-frames="50" aria-labelledby="theater-heading">
+          <h3 id="theater-heading">Theater</h3>
+          <video class="pair-source" src="media/theater-pair.mp4" width="2048" height="544" preload="auto" muted playsinline hidden></video>
+        </article>
+        <article class="comparison" data-method="4DGaussians" data-baseline-fps="28.40" data-ours-fps="76.63"
+                 data-fps="30" data-frames="50" aria-labelledby="fabien-heading">
+          <h3 id="fabien-heading">Fabien</h3>
+          <video class="pair-source" src="media/fabien-pair.mp4" width="2048" height="544" preload="auto" muted playsinline hidden></video>
+        </article>
+        <article class="comparison" data-method="GaGS" data-baseline-fps="2.33" data-ours-fps="34.54"
+                 data-fps="30" data-frames="50" aria-labelledby="train-heading">
+          <h3 id="train-heading">Train</h3>
+          <video class="pair-source" src="media/train-pair.mp4" width="2048" height="544" preload="auto" muted playsinline hidden></video>
+        </article>
+        <article class="comparison" data-method="SpeeDe3DGS" data-baseline-fps="12.60" data-ours-fps="57.65"
+                 data-fps="30" data-frames="50" aria-labelledby="painter-heading">
+          <h3 id="painter-heading">Painter</h3>
+          <video class="pair-source" src="media/painter-pair.mp4" width="2048" height="544" preload="auto" muted playsinline hidden></video>
+        </article>
+      </div>
+      <noscript>Enable JavaScript to use the comparison sliders.</noscript>
+      <template id="comparison-controls">
+        <div class="comparison-view">
+          <canvas width="1352" height="1014"></canvas>
+          <div class="side baseline"><span class="badge"><span class="backbone"></span><strong class="render-rate"></strong></span></div>
+          <div class="side ours"><span class="badge"><span><span class="backbone"></span> + CUESPLAT</span><strong class="render-rate"></strong></span></div>
+          <div class="divider" aria-hidden="true"><span>◀ ▶</span></div>
+          <input class="split-control" type="range" min="0" max="100" value="50" step="0.1"
+                 aria-label="Baseline share of the comparison" aria-valuetext="50 percent baseline">
+        </div>
+        <div class="playback">
+          <button type="button" class="play-toggle" disabled>Play</button>
+          <input class="timeline" type="range" min="0" value="0" step="1"
+                 aria-label="Scene timeline" disabled>
+          <span class="timecode"></span>
+        </div>
+        <p class="media-error" role="status"></p>
+      </template>
+    </section>
+
+    <section id="performance" aria-labelledby="performance-heading">
+      <h2 id="performance-heading"><span aria-hidden="true">📊</span> Performance on Edge Devices</h2>
+      <div class="device-panels">
+        <figure>
+          <a href="media/fps-agx-orin.svg">
+            <img src="media/fps-agx-orin.svg" loading="lazy" alt="AGX Orin rendering FPS. CUESPLAT increases throughput for all four backbones across all three datasets.">
+          </a>
+          <figcaption>(a) AGX Orin</figcaption>
+        </figure>
+        <figure>
+          <a href="media/fps-orin-nx.svg">
+            <img src="media/fps-orin-nx.svg" loading="lazy" alt="Orin NX rendering FPS. On Technicolor, GaGS increases from 3.79 to 30.91 FPS with CUESPLAT.">
+          </a>
+          <figcaption>(b) Orin NX</figcaption>
+        </figure>
+      </div>
+      <p class="figure-note">Rendering FPS is averaged over three runs per scene, then equally across scenes within each dataset.</p>
+    </section>
+
+    <section id="bibtex" aria-labelledby="bibtex-heading">
+      <h2 id="bibtex-heading">BibTeX</h2>
+      <pre><code>@misc{tang2026cuesplatlearningschedulesparse,
+  title = {{CueSplat}: Learning to Schedule Sparse Deformation for Dynamic
+           Gaussian Splatting on Edge Devices},
+  author = {Qingyuan Tang and He Zhu and Shixuan Sun and Anbang Wu and
+            Jingwen Leng and Minyi Guo and Yu Feng},
+  year = {2026},
+  eprint = {2611.22095},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CV},
+  url = {<a href="https://arxiv.org/abs/2611.22095">https://arxiv.org/abs/2611.22095</a>}
+}</code></pre>
+    </section>
+  </main>
+</body>
+</html>
